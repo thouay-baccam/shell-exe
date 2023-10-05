@@ -1,9 +1,10 @@
-# Vérifie si 'Shell_Userlist.csv' a été modifié.
+# Crée 'modifsave' s'il n'existe pas encore ou la dernière date de modification seras enregistrée.
+# Si le fichier existe, vérifie si le fichier 'Shell_Userlist.csv' a été modifié en se basant sur les données dans modifsave
 path=$(dirname "$0")
 modifsave=$(cat "$path/modifsave")
 lastmodif=$(date -r "$path/Shell_Userlist.csv" '+%Y-%m-%d %H:%M:%S')
 
-# Si le fichier a été modifié, crée et attribue des utilisateurs avec des rôles.
+# Si 'Shell_Userlist.csv' est modifié, le script crée et attribue des utilisateurs en fonction des rôles.
 if [[ "$modifsave" != "$lastmodif" ]]; then
     while IFS="," read -r id prenom nom mdp role; do
         username=$(echo "$prenom.$nom" | tr '[:upper:]' '[:lower:]')
